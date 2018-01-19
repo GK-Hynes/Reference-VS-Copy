@@ -7,7 +7,7 @@ Exercises to practice the difference between referencing and copying in JavaScri
 
 ### Strings, Numbers, and Booleans
 
-When dealing with strings, numbers and Boolean, if you assign them to a variable, set another variable to equal it, and then change the original, the second variable will not be updated.
+When dealing with strings, numbers and Booleans, if you assign them to a variable, set another variable to equal it, and then change the original, the second variable will not be updated.
 
 ```js
 let age = 100;
@@ -21,9 +21,9 @@ You have made a copy, independent of the original.
 
 ### Arrays
 
-Arrays work differently. If you create an array, then set a second array to equal it, then chage the second array, the original array will be updated.
+Arrays work differently. If you create an array, then set a second array to equal it and chage the second array, the original array will be updated.
 
-This is because the second array is an array is an array reference, not an array copy. They both point to the same array.
+This is because the second array is an array reference, not an array copy. They both point to the same array.
 
 ```js
 const players = ["Wes", "Sarah", "Ryan", "Poppy"];
@@ -53,7 +53,7 @@ You can also use ES6 spread. Spread takes every item out of your iterable and pu
 
 `const team4 = [...players];`
 
-Finally, you can use `Array.from()` which also leaves the original array untouched.
+Finally, you can use `Array.from()`, which also leaves the original array untouched.
 
 `const team5 = Array.from(players);`
 
@@ -71,7 +71,7 @@ const person = {
 
 const captain = person;
 captain.number = 99;
-// person {name: "Ger Hynes", age: 29, number: 99}
+console.log(person); // {name: "Ger Hynes", age: 29, number: 99}
 ```
 
 You will have made a reference, not a copy.
@@ -85,7 +85,19 @@ const cap2 = Object.assign({}, person, { number: 99, age: 12 });
 console.log(cap2); // {name: "Ger Hynes", age: 12, number: 99}
 ```
 
-Object spread should be added soon.
-`cap3 = {...person};`
+Object spread should be added soon: `cap3 = {...person};`
 
 So far, these are very shallow copies. They only go one level deep.
+
+For example, if you have an object containing a nested object and make a copy using `Object.assign()` the nested object will be referenced, not copied.
+
+If you need to clone an object you have to use a Deep Clone function.
+
+You _can_ use `JSON.parse(JSON.stringify())`:
+
+```js
+const dev = Object.assign({}, ger); // shallow copy
+const dev2 = JSON.parse(JSON.stringify(ger)); // deep clone
+```
+
+`JSON.stringify()` will return a string, not an object. Immediately calling `JSON.parse()` will turn it back into an object.
